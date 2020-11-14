@@ -60,7 +60,7 @@ namespace Gamekit2D
             MeleeAttack.Get(fixedUpdateHappened, inputType);
             RangedAttack.Get(fixedUpdateHappened, inputType);
             Jump.Get(fixedUpdateHappened, inputType);
-            Horizontal.Get(inputType);
+            //Horizontal.Get(inputType);
             Vertical.Get(inputType);
 
             if (Input.GetKeyDown(KeyCode.F12))
@@ -78,7 +78,7 @@ namespace Gamekit2D
             GainControl(MeleeAttack);
             GainControl(RangedAttack);
             GainControl(Jump);
-            GainControl(Horizontal);
+            //GainControl(Horizontal);
             GainControl(Vertical);
         }
 
@@ -91,7 +91,7 @@ namespace Gamekit2D
             ReleaseControl(MeleeAttack, resetValues);
             ReleaseControl(RangedAttack, resetValues);
             ReleaseControl(Jump, resetValues);
-            ReleaseControl(Horizontal, resetValues);
+            //ReleaseControl(Horizontal, resetValues);
             ReleaseControl(Vertical, resetValues);
         }
 
