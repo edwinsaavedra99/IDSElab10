@@ -111,6 +111,7 @@ namespace Gamekit2D
         protected const float k_MaxHurtJumpAngle = 89.999f;
 
         private int velocidadJugador = 5;
+        private bool flag = true;
         
         protected const float
             k_GroundedStickingVelocityMultiplier =
@@ -220,13 +221,23 @@ namespace Gamekit2D
                 velocidadJugador = 5;
             }
             */
-            m_MoveVector.x = velocidadJugador;
+            if(flag){
+                m_MoveVector.x = velocidadJugador;                
+            }
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
             m_Animator.SetFloat(m_HashHorizontalSpeedPara, m_MoveVector.x);
             m_Animator.SetFloat(m_HashVerticalSpeedPara, m_MoveVector.y);
             UpdateBulletSpawnPointPositions();
             UpdateCameraFollowTargetPosition();
         }
+
+        public void activeRunner(){
+            flag = true;
+        }
+        public void desactiveRunner(){
+            flag = false;
+        }
+
 
         public void Unpause()
         {

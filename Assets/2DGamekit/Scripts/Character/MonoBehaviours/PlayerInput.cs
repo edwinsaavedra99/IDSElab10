@@ -27,6 +27,7 @@ namespace Gamekit2D
         protected bool m_HaveControl = true;
 
         protected bool m_DebugMenuIsOpen = false;
+        private bool flag = false;
 
         void Awake ()
         {
@@ -53,6 +54,14 @@ namespace Gamekit2D
             s_Instance = null;
         }
 
+        public void activeRunner(){
+            flag = false;
+        }
+        public void desactiveRunner(){
+            flag = true;
+        }
+
+
         protected override void GetInputs(bool fixedUpdateHappened)
         {
             Pause.Get(fixedUpdateHappened, inputType);
@@ -60,7 +69,9 @@ namespace Gamekit2D
             MeleeAttack.Get(fixedUpdateHappened, inputType);
             RangedAttack.Get(fixedUpdateHappened, inputType);
             Jump.Get(fixedUpdateHappened, inputType);
-            //Horizontal.Get(inputType);
+            if(flag){
+                Horizontal.Get(inputType);                
+            }
             Vertical.Get(inputType);
 
             if (Input.GetKeyDown(KeyCode.F12))
@@ -78,7 +89,9 @@ namespace Gamekit2D
             GainControl(MeleeAttack);
             GainControl(RangedAttack);
             GainControl(Jump);
-            //GainControl(Horizontal);
+             if(flag){
+                GainControl(Horizontal);
+             }
             GainControl(Vertical);
         }
 
@@ -91,7 +104,9 @@ namespace Gamekit2D
             ReleaseControl(MeleeAttack, resetValues);
             ReleaseControl(RangedAttack, resetValues);
             ReleaseControl(Jump, resetValues);
-            //ReleaseControl(Horizontal, resetValues);
+             if(flag){
+                ReleaseControl(Horizontal, resetValues);
+             }
             ReleaseControl(Vertical, resetValues);
         }
 
