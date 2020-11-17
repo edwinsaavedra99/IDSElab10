@@ -42,7 +42,7 @@ namespace Gamekit2D
                 m_DeactivationCoroutine = null;
             }
 
-            if (player != null)
+            if (player != null && phraseKey != "INFOPOST4" && phraseKey != "INFOPOST5")
             {
                 player.DeactivateRunnerForTooltip();
             }
