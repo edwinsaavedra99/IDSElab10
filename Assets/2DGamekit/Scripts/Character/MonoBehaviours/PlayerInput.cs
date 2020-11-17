@@ -10,9 +10,12 @@ namespace Gamekit2D
         }
 
         protected static PlayerInput s_Instance;
-    
-    
-        public bool HaveControl { get { return m_HaveControl; } }
+
+
+        public bool HaveControl
+        {
+            get { return m_HaveControl; }
+        }
 
         public InputButton Pause = new InputButton(KeyCode.Escape, XboxControllerButtons.Menu);
         public InputButton Interact = new InputButton(KeyCode.E, XboxControllerButtons.Y);
@@ -21,29 +24,30 @@ namespace Gamekit2D
         public InputButton Jump = new InputButton(KeyCode.Space, XboxControllerButtons.A);
         public InputAxis Horizontal = new InputAxis(KeyCode.D, KeyCode.A, XboxControllerAxes.LeftstickHorizontal);
         public InputAxis Vertical = new InputAxis(KeyCode.W, KeyCode.S, XboxControllerAxes.LeftstickVertical);
-        [HideInInspector]
-        public DataSettings dataSettings;
+        [HideInInspector] public DataSettings dataSettings;
 
         protected bool m_HaveControl = true;
 
         protected bool m_DebugMenuIsOpen = false;
         private bool flag = false;
 
-        void Awake ()
+        void Awake()
         {
             if (s_Instance == null)
                 s_Instance = this;
             else
-                throw new UnityException("There cannot be more than one PlayerInput script.  The instances are " + s_Instance.name + " and " + name + ".");
+                throw new UnityException("There cannot be more than one PlayerInput script.  The instances are " +
+                                         s_Instance.name + " and " + name + ".");
         }
 
         void OnEnable()
         {
             if (s_Instance == null)
                 s_Instance = this;
-            else if(s_Instance != this)
-                throw new UnityException("There cannot be more than one PlayerInput script.  The instances are " + s_Instance.name + " and " + name + ".");
-        
+            else if (s_Instance != this)
+                throw new UnityException("There cannot be more than one PlayerInput script.  The instances are " +
+                                         s_Instance.name + " and " + name + ".");
+
             PersistentDataManager.RegisterPersister(this);
         }
 
@@ -54,10 +58,13 @@ namespace Gamekit2D
             s_Instance = null;
         }
 
-        public void activeRunner(){
+        public void activeRunner()
+        {
             flag = false;
         }
-        public void desactiveRunner(){
+
+        public void desactiveRunner()
+        {
             flag = true;
         }
 
@@ -69,9 +76,11 @@ namespace Gamekit2D
             MeleeAttack.Get(fixedUpdateHappened, inputType);
             RangedAttack.Get(fixedUpdateHappened, inputType);
             Jump.Get(fixedUpdateHappened, inputType);
-            if(flag){
-                Horizontal.Get(inputType);                
+            if (flag)
+            {
+                Horizontal.Get(inputType);
             }
+
             Vertical.Get(inputType);
 
             if (Input.GetKeyDown(KeyCode.F12))
@@ -89,9 +98,11 @@ namespace Gamekit2D
             GainControl(MeleeAttack);
             GainControl(RangedAttack);
             GainControl(Jump);
-             if(flag){
+            if (flag)
+            {
                 GainControl(Horizontal);
-             }
+            }
+
             GainControl(Vertical);
         }
 
@@ -104,9 +115,11 @@ namespace Gamekit2D
             ReleaseControl(MeleeAttack, resetValues);
             ReleaseControl(RangedAttack, resetValues);
             ReleaseControl(Jump, resetValues);
-             if(flag){
+            if (flag)
+            {
                 ReleaseControl(Horizontal, resetValues);
-             }
+            }
+
             ReleaseControl(Vertical, resetValues);
         }
 
@@ -148,7 +161,7 @@ namespace Gamekit2D
 
         public void LoadData(Data data)
         {
-            Data<bool, bool> playerInputData = (Data<bool, bool>)data;
+            Data<bool, bool> playerInputData = (Data<bool, bool>) data;
 
             if (playerInputData.value0)
                 MeleeAttack.Enable();
@@ -190,6 +203,7 @@ namespace Gamekit2D
                     else
                         RangedAttack.Disable();
                 }
+
                 GUILayout.EndVertical();
                 GUILayout.EndArea();
             }

@@ -110,7 +110,7 @@ namespace Gamekit2D
         protected const float k_MinHurtJumpAngle = 0.001f;
         protected const float k_MaxHurtJumpAngle = 89.999f;
 
-        private int velocidadJugador = 5;
+        private int velocidadJugador = 0;
         private bool flag = true;
 
         protected const float
@@ -209,7 +209,7 @@ namespace Gamekit2D
 
         void FixedUpdate()
         {
-            if (flag)
+            if (flag && PlayerInput.Instance.HaveControl)
             {
                 m_MoveVector.x = velocidadJugador;
             }
