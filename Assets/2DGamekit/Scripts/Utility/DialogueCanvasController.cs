@@ -9,6 +9,7 @@ namespace Gamekit2D
     {
         public Animator animator;
         public TextMeshProUGUI textMeshProUGUI;
+        public PlayerCharacter player;
 
         protected Coroutine m_DeactivationCoroutine;
 
@@ -39,6 +40,11 @@ namespace Gamekit2D
             {
                 StopCoroutine(m_DeactivationCoroutine);
                 m_DeactivationCoroutine = null;
+            }
+
+            if (player != null)
+            {
+                player.DeactivateRunnerForTooltip();
             }
 
             gameObject.SetActive(true);

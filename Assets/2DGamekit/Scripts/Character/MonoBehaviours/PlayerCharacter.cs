@@ -112,6 +112,7 @@ namespace Gamekit2D
 
         private int velocidadJugador = 0;
         private bool flag = true;
+        private bool isTooltip = false;
 
         protected const float
             k_GroundedStickingVelocityMultiplier =
@@ -231,6 +232,11 @@ namespace Gamekit2D
             flag = false;
         }
 
+        public void DeactivateRunnerForTooltip()
+        {
+            flag = false;
+            isTooltip = true;
+        }
 
         public void Unpause()
         {
@@ -501,7 +507,16 @@ namespace Gamekit2D
                 }
             }
             else
+            {
+                // Si el jugador esta en el aire y hay un tooltip activo, devolverle movimiento
+                if (!flag && isTooltip)
+                {
+                    flag = true;
+                    isTooltip = false;
+                }
+                
                 m_CurrentSurface = null;
+            }
 
             m_Animator.SetBool(m_HashGroundedPara, grounded);
 
