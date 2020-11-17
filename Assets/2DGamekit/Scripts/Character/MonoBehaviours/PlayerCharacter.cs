@@ -112,7 +112,7 @@ namespace Gamekit2D
 
         private int velocidadJugador = 5;
         private bool flag = true;
-        
+
         protected const float
             k_GroundedStickingVelocityMultiplier =
                 3f; // This is to help the character stick to vertically moving platforms.
@@ -209,21 +209,11 @@ namespace Gamekit2D
 
         void FixedUpdate()
         {
-            /*
-            if (Input.GetKeyDown(KeyCode.S))
+            if (flag)
             {
-                Debug.Log("S abajo :D");
-                velocidadJugador = 0;
+                m_MoveVector.x = velocidadJugador;
             }
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                Debug.Log("S arriba D:");
-                velocidadJugador = 5;
-            }
-            */
-            if(flag){
-                m_MoveVector.x = velocidadJugador;                
-            }
+
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
             m_Animator.SetFloat(m_HashHorizontalSpeedPara, m_MoveVector.x);
             m_Animator.SetFloat(m_HashVerticalSpeedPara, m_MoveVector.y);
@@ -231,10 +221,13 @@ namespace Gamekit2D
             UpdateCameraFollowTargetPosition();
         }
 
-        public void activeRunner(){
+        public void activeRunner()
+        {
             flag = true;
         }
-        public void desactiveRunner(){
+
+        public void desactiveRunner()
+        {
             flag = false;
         }
 
@@ -480,6 +473,7 @@ namespace Gamekit2D
                 {
                     velocidadJugador = 5;
                 }
+
                 m_Animator.SetBool(m_HashCrouchingPara, true);
             }
             else
@@ -487,6 +481,7 @@ namespace Gamekit2D
                 velocidadJugador = 5;
                 m_Animator.SetBool(m_HashCrouchingPara, false);
             }
+
             // m_Animator.SetBool(m_HashCrouchingPara, PlayerInput.Instance.Vertical.Value < 0f);
         }
 
@@ -779,7 +774,7 @@ namespace Gamekit2D
         IEnumerator DieRespawnCoroutine(bool resetHealth, bool useCheckPoint)
         {
             PlayerInput.Instance.ReleaseControl(true);
-            yield return new WaitForSeconds(1.0f); //wait one second before respawing
+            yield return new WaitForSeconds(1.0f); // wait one second before respawing
             yield return StartCoroutine(
                 ScreenFader.FadeSceneOut(useCheckPoint ? ScreenFader.FadeType.Black : ScreenFader.FadeType.GameOver));
             if (!useCheckPoint)
@@ -853,7 +848,10 @@ namespace Gamekit2D
 
             m_Animator.SetTrigger(m_HashRespawnPara);
 
-            if (useCheckpoint && m_LastCheckpoint != null)
+            // 
+            // if (useCheckpoint && m_LastCheckpoint != null)
+            // Hacer que si se establecio el checkpoint, volver a el cuando el jugador muere.
+            if (m_LastCheckpoint != null)
             {
                 UpdateFacing(m_LastCheckpoint.respawnFacingLeft);
                 GameObjectTeleporter.Teleport(gameObject, m_LastCheckpoint.transform.position);
